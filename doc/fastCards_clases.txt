@@ -1,0 +1,28 @@
+@startuml
+class User {
+  - email: String
+  - password: String
+  - decks: List<Deck>
+  + addDeck(deck: Deck): bool
+  + delDeck(deck: Deck): bool
+}
+
+class Deck {
+  - name: String
+  - cards: List<Card>
+  + addCard(card: Card): bool
+  + eliminarTarjeta(card: Card): bool
+  + getCards(): List<Card>
+}
+
+class Card {
+  - front: String
+  - back: String
+  - studied: bool
+  + getCard(): Card
+  + study(): bool
+}
+
+User "0" o-- "1..*" Deck
+Deck "1" o-- "0..*" Card
+@enduml
