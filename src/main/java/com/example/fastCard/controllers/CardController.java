@@ -1,8 +1,11 @@
 package com.example.fastCard.controllers;
 
-import com.example.fastCard.dtos.CardResponseDto;
+import com.example.fastCard.dtos.Cards.CardCreateDto;
+import com.example.fastCard.dtos.Cards.CardResponseDto;
+import com.example.fastCard.dtos.Cards.CardStudyDto;
 import com.example.fastCard.entities.Card;
-import com.example.fastCard.mappers.CardResponseMapper;
+import com.example.fastCard.mappers.card.CardCreateMapper;
+import com.example.fastCard.mappers.card.CardResponseMapper;
 import com.example.fastCard.services.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +26,12 @@ public class CardController {
         return CardResponseMapper.toCardDtoList(cardService.getAllCards());
     }
 
+    @GetMapping("/deck/{deckId}")
+    public List<CardResponseDto> getCardsByDeck(@PathVariable Long deckId){
+        List<Card> cards = cardService.getCardsByDeck(deckId);
+        return CardResponseMapper.toCardDtoList(cards);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<CardResponseDto> getCardById(@PathVariable Long id) {
         Optional<Card> cardById = cardService.getCardById(id);
@@ -31,9 +40,15 @@ public class CardController {
     }
 
     @PostMapping
-    public CardResponseDto createCard(@RequestBody Card card) {
-        Long deckId = card.getDeck().getId();
-        return CardResponseMapper.toCardDTO(cardService.createCard(deckId, card));
+    public CardResponseDto createCard(@RequestBody CardCreateDto cardCreateDto) {
+        Long deckId = cardCreateDto.getDeck().getId();
+        return CardResponseMapper.toCardDTO(cardService.createCard(deckId, CardCreateMapper.toCardDto(cardCreateDto)));
+    }
+
+    @PostMapping("/study")
+    public CardResponseDto studyCard(@RequestBody CardStudyDto cardStudyDto){
+        Card card = cardService.studyCard(cardStudyDto.getCardId(), cardStudyDto.isAnswerKnow());
+        return CardResponseMapper.toCardDTO(card);
     }
 
     @PutMapping("/{id}")

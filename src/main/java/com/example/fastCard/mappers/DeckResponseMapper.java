@@ -2,6 +2,7 @@ package com.example.fastCard.mappers;
 
 import com.example.fastCard.dtos.DeckResponseDto;
 import com.example.fastCard.entities.Deck;
+import com.example.fastCard.mappers.card.CardResponseMapper;
 import lombok.Data;
 
 import java.util.List;

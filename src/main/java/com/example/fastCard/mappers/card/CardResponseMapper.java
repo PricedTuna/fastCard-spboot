@@ -1,6 +1,6 @@
-package com.example.fastCard.mappers;
+package com.example.fastCard.mappers.card;
 
-import com.example.fastCard.dtos.CardResponseDto;
+import com.example.fastCard.dtos.Cards.CardResponseDto;
 import com.example.fastCard.entities.Card;
 import lombok.Data;
 
@@ -27,9 +27,11 @@ public class CardResponseMapper {
         cardDTO.setId(card.getId());
         cardDTO.setFront(card.getFront());
         cardDTO.setBack(card.getBack());
-        cardDTO.setStudied(card.isStudied());
-
+        cardDTO.setStudyAgain(card.getStudyAgain());
+        System.out.println(cardDTO);
         return cardDTO;
+
+
     }
 
 }
